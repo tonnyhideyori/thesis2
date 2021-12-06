@@ -42,7 +42,6 @@ def player1(player):
         game[player1Move] = 0
     return [temp,player1Move]
 
-
 def movingforward(count,player1,who):
     #how to move the token
     if who=="play1":
@@ -81,6 +80,7 @@ def play(player):
     result=movingforward(outcome[0],outcome[1],player)
     if result[0]==1 and (result[2]!=6 and result[2]!=13):
         takeover(result[2],player)
+    print(player)
     board()
     return player
 
@@ -88,9 +88,15 @@ def simulate():
     board()
     #iteration of the game until one of the player have zero token
     x=play("play1")
+    board()
     while sum(game[0:6])!=0 and sum(game[7:13])!=0:
         if x=="play1":
              x=play("play2")
         else:
             x=play("play1")
 simulate()
+if sum(game[0:7])>sum(game[7:14]):
+    winner="player 1"
+else:
+    winner="player 2"
+print("The winner is :",winner)
