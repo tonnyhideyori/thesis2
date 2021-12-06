@@ -25,7 +25,6 @@ def player1(player):
     if player=="play1":
         player1Move=random.randint(0,5)
         nonzero = [i for i, x in enumerate(game[0:6]) if x > 0 and game.index(x) < 6]
-        #print(f"nonzero :{nonzero}")
         while game[player1Move]==0 and len(nonzero)>0:
             player1Move = random.choice(nonzero)
         temp = game[player1Move]
@@ -36,7 +35,6 @@ def player1(player):
         for i in nonzero:
             if i >6 and i<13:
                 second.append(i)
-        #print("second nonzero ", player, nonzero)
         while game[player1Move] == 0 and len(second) > 0:
             print("choose new position")
             player1Move = random.choice(second)
@@ -46,8 +44,7 @@ def player1(player):
 
 
 def movingforward(count,player1,who):
-    #this is the actual game how to move tokes so play1 and play2 have same principle except on index and home store play1 avoid index 13 and play2 avoid index 6
-    # i use modulo when token is above 13 but I have another idea that we can use two lists one for each and when we know we are out index we move to the other list . when iterate until we heat zero count(stones at hand) i think two list will much easier with the implementation of try and except.
+    #how to move the token
     if who=="play1":
         step=0
         while count > 0:
