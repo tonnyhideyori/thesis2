@@ -4,16 +4,14 @@ game[6]=game[13]=0
 def board():
     x=game[7:13]
     x.reverse()
-    print(x)
     print('\npit nos       :  6  5  4  3  2  1')
     print('                -------------------')
     print('Player2 >>> ',[game[13]], "  ".join(map(str,x)))
-    print('Player1 >>> ', '  ', game[0:6], game[6])
+    print('Player1 >>> ', '  ', game[0:6], [game[6]])
     print('                -------------------')
     print('pit nos       :  1  2  3  4  5  6')
 
 def takeover(x,player):
-    #print("this is x: ",x)
     if player == "play1" and game[12-x] > 0:
         game[6]=game[6]+game[12-x] + game[x]
         game[12-x]=game[x]=0
@@ -68,7 +66,6 @@ def movingforward(count,player1,who):
         while count > 0 :
             step += 1
             try:
-                #TODO: for player 2 it skip position zero but add to position one , it is not supposed to be like this hence investigate how to solve this.
                 game[step+player1]+=1
                 x=step+player1
             except:
@@ -77,31 +74,21 @@ def movingforward(count,player1,who):
                 game[(step+player1-1)%13]+=1
                 x = (step+player1-1)%13
             count -= 1
-    #print(x)
-    #print(game,sum(game), who)
-    #print("this is the last token: ",game[x]) # TODO: checking if last position is not zero, if it is home play again
     return [game[x],player1,x]
-#TODO function of when dropping to zero taking all opponent tokens 
 def play(player):
     # how to play game
     if player=="play1":
         outcome=player1("play1")
     else:
         outcome=player1("play2")
-    #print(f"first outcome: {outcome}, {player}")
     result=movingforward(outcome[0],outcome[1],player)
     if result[0]==1 and (result[2]!=6 and result[2]!=13):
-        print("hi")
         takeover(result[2],player)
-        """outcome = player1(player)
-        print("we are here")
-        print(outcome)
-        print("----------------------")
-        result = movingforward(outcome[0], outcome[1],player)"""
     board()
     return player
 
 def simulate():
+    board()
     #iteration of the game until one of the player have zero token
     x=play("play1")
     while sum(game[0:6])!=0 and sum(game[7:13])!=0:
@@ -110,4 +97,3 @@ def simulate():
         else:
             x=play("play1")
 simulate()
-#print(game)
