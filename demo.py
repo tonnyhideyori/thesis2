@@ -2,8 +2,8 @@ from new_alpha import AI
 from size6 import size6
 ai =AI("player1",5)
 size=size6(6)
-player=size.play("player2")
-print("this",player)
+size.board()
+player="player1"
 while sum(size.game[0:6]) != 0 and sum(size.game[7:13]) != 0:
     if ai.player == player:
         print("AI",player)
