@@ -1,23 +1,36 @@
 import random
 from my_alphabeta import AlphaBeta
 class size6(object):
-    def __init__(self,seed):
+    def __init__(self,seed,other=None):
         self.game = [seed]*14
         self.game[seed] = self.game[13] = 0
-        #else:
-            #pass # i need to understand this part
+        if other != None:
+            for i in range(0,len(other.game)):
+                self.game[i]=other.game[i]
+
     
     def get_score(self,player):
-        if player == "play1":
+        if player == "player1":
             return sum(self.game[0:7])
         else:
             return sum(self.game[7:])
     
     def get_piece(self,player):
-        if player == "play1":
+        if player == "player1":
             return sum(self.game[0:6])
         else:
             return sum(self.game[7:13])
+    def check_move(self,player,move):
+        if player == "player1":
+            if self.game[move]>0:
+                return True
+            else:
+                return False
+        else:
+            if self.game[move]>0:
+                return True
+            else:
+                return False
         
     def board(self):
         x=self.game[7:13]
@@ -30,17 +43,17 @@ class size6(object):
         print('pit nos       :  1  2  3  4  5  6')
 
     def takeover(self,x,player):
-        if player == "play1" and self.game[12-x] > 0:
+        if player == "player1" and self.game[12-x] > 0:
             self.game[6]=self.game[6]+self.game[12-x] + self.game[x]
             self.game[12-x]=self.game[x]=0
-        if player=="play2" and self.game[12-x]>0:
+        if player=="player2" and self.game[12-x]>0:
             self.game[13]=self.game[13] + self.game[12-x] + self.game[x]
             self.game[12-x] = self.game[x] = 0
 
     def player(self,player):
         second=[]
         #This is chosing a random postion just for the automation
-        if player=="play1":
+        if player=="player1":
             player1Move=random.randint(0,5)
             nonzero = [i for i, x in enumerate(self.game[0:6]) if x > 0 and self.game.index(x) < 6]
             while self.game[player1Move]==0 and len(nonzero)>0:
@@ -62,7 +75,7 @@ class size6(object):
 
     def movingforward(self,count,player1,who):
         #how to move the token
-        if who=="play1":
+        if who=="player1":
             step=0
             while count > 0:
                 step+=1
@@ -91,12 +104,12 @@ class size6(object):
         return [self.game[x],player1,x]
 
     def play(self,player):
-        alpha=AlphaBeta()
+        #alpha=AlphaBeta()
         # how to play self.game
-        if player=="play1":
-            outcome=alpha.movealphabeta(self.game)#self.player("play1")
+        if player=="player1":
+            outcome=self.player("player1")#alpha.movealphabeta(self.game)#
         else:
-            outcome=self.player("play2")
+            outcome=self.player("player2")
         result=self.movingforward(outcome[0],outcome[1],player)
         if result[0]==1 and (result[2]!=6 and result[2]!=13):
             self.takeover(result[2],player)
@@ -112,16 +125,16 @@ class size6(object):
     def simulate(self):
         self.board()
     #iteration of the game until one of the player have zero token
-        x = self.play("play1")
+        x = self.play("player1")
         self.board()
         while sum(self.game[0:6]) != 0 and sum(self.game[7:13]) != 0:  # checking if you don
-            if x == "play1":
-                x = self.play("play2")
+            if x == "player1":
+                x = self.play("player2")
             else:
-                x = self.play("play1")
+                x = self.play("player1")
 
     def winner(self):
-        if sum(self.game[0:6]) > sum(self.game[7:14]):
+        if sum(self.game[0:7]) > sum(self.game[7:14]):
             winner = "player 1"
         else:
             winner = "player 2"

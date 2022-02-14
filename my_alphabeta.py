@@ -3,12 +3,12 @@ class AlphaBeta(object):
         if board.game_over() or depth == 0:
             value = board.get_pieces(player) + board.get_score(player)
             return value
-        if player == "play1":
+        if player == "player1":
             value = -72
             cut=False
             for i in range(0,(len(board.game))/2):
                 if not cut: 
-                    next_player="play2" if player == "play1" else "play1"
+                    next_player="player2" if player == "player1" else "player1"
                     value =max(value, self.basic_alphabeta(board,alpha,beta,next_player,depth-1))
                     beta=max(beta,value)
                     if alpha>=beta:
@@ -20,7 +20,7 @@ class AlphaBeta(object):
             cut = False
             for i in range((len(board.game))/2, len(board.game)):
                 if not cut: 
-                    next_player="play1" if player == "play2" else "play2"
+                    next_player="player1" if player == "player2" else "player2"
                     value =min(value, self.basic_alphabeta(board,alpha,beta,next_player,depth-1))
                     beta = min(beta, value)
                     if alpha >= beta:
@@ -35,7 +35,7 @@ class AlphaBeta(object):
         root=[]
         copy_board=board
         #checking possible moves.
-        if player == "play1":
+        if player == "player1":
             nonzero = [i for i, x in enumerate(copy_board[0:6]) if x > 0 and copy_board.index(x) < 6]
         else:
             nonzero = [i for i, x in enumerate(copy_board[7:13]) if x > 0 and copy_board.index(x) < 13]
@@ -51,8 +51,8 @@ class AlphaBeta(object):
             bestvalue = self.evaluate(board)
             print("this is best value",bestvalue)
             return bestvalue
-        elif player=="play1":
-            opponent ="play2"
+        elif player=="player1":
+            opponent ="player2"
             bestvalue = -72
             children = self.children(board,player)
             for child in children:
@@ -64,7 +64,7 @@ class AlphaBeta(object):
                 if alpha >= beta:
                     break
         else:
-            opponent = "play1"
+            opponent = "player1"
             bestvalue = 72
             children = self.children(board,player)
             for child in children:
@@ -78,7 +78,7 @@ class AlphaBeta(object):
         copy=board
         value=alpha=-72
         beta=72
-        player="play1"
+        player="player1"
         i=move=0
         while i < 6:
             if board[i] !=0:
@@ -93,7 +93,7 @@ class AlphaBeta(object):
     
     def movingforward(self,game,count,player1,who):
         #how to move the token
-        if who=="play1":
+        if who=="player1":
             step=0
             while count > 0:
                 step+=1

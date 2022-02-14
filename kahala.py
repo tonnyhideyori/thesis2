@@ -12,7 +12,7 @@ if pit==4:
     size.simulate()
     size.winner()
 elif pit==5:
-    size=size5(seed)
+    size=size5()#seed)
     size.simulate()
     size.winner()
 elif pit==6:

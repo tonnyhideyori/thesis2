@@ -1,8 +1,11 @@
 import random
 class size5(object):
-    def __init__(self,seed):
-        self.game=[seed]*12
+    def __init__(self,other=None):
+        self.game=[6]*12
         self.game[5]=self.game[11]=0
+        if other:
+            for i in range(0,len(other.game)):
+                self.game[i]=other.game[i]
         
     def board(self):
         x = self.game[6:11]
@@ -15,17 +18,17 @@ class size5(object):
         print('pit nos       :  1  2  3  4  5')
         
     def takeover(self, x, player):
-        if player == "play1" and self.game[8-x] > 0:
+        if player == "player1" and self.game[8-x] > 0:
             self.game[5] = self.game[5]+self.game[10-x] + self.game[x]
             self.game[10-x] = self.game[x] = 0
-        if player == "play2" and self.game[10-x] > 0:
+        if player == "player2" and self.game[10-x] > 0:
             self.game[11] = self.game[11] + self.game[10-x] + self.game[x]
             self.game[10-x] = self.game[x] = 0
             
     def player(self, player):
         second = []
         #This is chosing a random postion just for the automation
-        if player == "play1":
+        if player == "player1":
             player1Move = random.randint(0, 4)
             nonzero = [i for i, x in enumerate(
                 self.game[0:5]) if x > 0 and self.game.index(x) < 5]
@@ -48,7 +51,7 @@ class size5(object):
 
     def movingforward(self, count, player1, who):
         #how to move the token
-        if who == "play1":
+        if who == "player1":
             step = 0
             while count > 0:
                 step += 1
@@ -78,10 +81,10 @@ class size5(object):
 
     def play(self, player):
         # how to play self.game
-        if player == "play1":
-            outcome = self.player("play1")
+        if player == "player1":
+            outcome = self.player("player1")
         else:
-            outcome = self.player("play2")
+            outcome = self.player("player2")
         result = self.movingforward(outcome[0], outcome[1], player)
         if result[0] == 1 and (result[2] != 5 and result[2] != 11):
             self.takeover(result[2], player)
@@ -97,13 +100,13 @@ class size5(object):
     def simulate(self):
         self.board()
     #iteration of the game until one of the player have zero token
-        x = self.play("play1")
+        x = self.play("player1")
         self.board()
         while sum(self.game[0:5]) != 0 and sum(self.game[6:11]) != 0:  # checking if you don
-            if x == "play1":
-                x = self.play("play2")
+            if x == "player1":
+                x = self.play("player2")
             else:
-                x = self.play("play1")
+                x = self.play("player1")
 
     def winner(self):
         if sum(self.game[0:5]) > sum(self.game[6:12]):
