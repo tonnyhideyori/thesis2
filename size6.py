@@ -106,10 +106,10 @@ class size6(object):
     def play(self,player):
         #alpha=AlphaBeta()
         # how to play self.game
-        if player=="player1":
-            outcome=self.player("player1")#alpha.movealphabeta(self.game)#
-        else:
-            outcome=self.player("player2")
+        #if player=="player1":
+            #outcome=self.player("player1")#alpha.movealphabeta(self.game)#
+        #else:
+        outcome=self.player("player2")
         result=self.movingforward(outcome[0],outcome[1],player)
         if result[0]==1 and (result[2]!=6 and result[2]!=13):
             self.takeover(result[2],player)
