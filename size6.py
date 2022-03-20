@@ -1,5 +1,6 @@
+import csv
 import random
-from my_alphabeta import AlphaBeta
+#from my_alphabeta import AlphaBeta
 class size6(object):
     def __init__(self,seed,other=None):
         self.game = [seed]*14
@@ -11,9 +12,10 @@ class size6(object):
     
     def get_score(self,player):
         if player == "player1":
-            return sum(self.game[0:7])
+            return sum(self.game[0:6])
         else:
             return sum(self.game[7:])
+        print(self,player)
     
     def get_piece(self,player):
         if player == "player1":
@@ -31,6 +33,7 @@ class size6(object):
                 return True
             else:
                 return False
+
         
     def board(self):
         x=self.game[7:13]
@@ -139,6 +142,18 @@ class size6(object):
         else:
             winner = "player 2"
         print("The winner is :", winner)
+
+
     
     def game_over(self):
         return (sum(self.game[0:6]) == 0 or sum(self.game[7:13]) == 0)
+
+    with open('time.csv', 'w') as csvfile:
+        fieldnames = ['winner', 'total_time']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+        writer.writerow({'winner': winner})
+        csvfile.close()
+
+
