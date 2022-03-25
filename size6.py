@@ -142,6 +142,7 @@ class size6(object):
         else:
             winner = "player 2"
         print("The winner is :", winner)
+        return winner
 
 
     

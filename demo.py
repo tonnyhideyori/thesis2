@@ -5,7 +5,7 @@ from time import time
 import pickle
 total_time=0
 
-for x in range(2):
+for x in range(0,2):
     ai =AI("player1",5)
     size=size6(6)
     size.board()
@@ -14,9 +14,6 @@ for x in range(2):
 
     while sum(size.game[0:6]) != 0 and sum(size.game[7:13]) != 0:
         t = time()
-
-
-
         if ai.player == player:
             print("AI",player)
             move=ai.move_series(size)
@@ -34,14 +31,11 @@ for x in range(2):
             player=size.play("player2")
             player = "player1"
     print("total time is %.1fs" % (total_time))
-    size.winner()
+    #size.winner()
 
-    with open('time.csv', 'w', newline='') as csvfile:
+    with open('time.csv', 'w+', newline='') as csvfile:
         fieldnames = ['winner', 'total_time']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
         writer.writeheader()
-        writer.writerow({'winner': size.winner, 'total_time': total_time})
-        csvfile.close()
-
-    
+        u=size.winner()
+        writer.writerow({'winner': u, 'total_time': total_time})
